@@ -589,9 +589,9 @@ namespace dds {
 		// Read the file into a vector.
 		filestream.seekg(0, std::ios::end);
 		auto fileSize = filestream.tellg();
-		image->data.resize(fileSize);
+        image->data = std::make_unique<uint8_t[]>(fileSize);
 		filestream.seekg(0);
-		filestream.read(reinterpret_cast<char*>(image->data.data()), fileSize);
-		return readImage(image->data.data(), fileSize, image);
+		filestream.read(reinterpret_cast<char*>(image->data.get()), fileSize);
+		return readImage(image->data.get(), fileSize, image);
 	}
 } // namespace dds

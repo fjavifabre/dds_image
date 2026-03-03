@@ -254,7 +254,7 @@ namespace dds {
             case DXGI_FORMAT_R8G8_UNORM:
                 return VK_FORMAT_R8G8_UNORM;
             case DXGI_FORMAT_R8G8_UINT:
-                return VK_FORMAT_R8G8_SINT;
+                return VK_FORMAT_R8G8_UINT;
             case DXGI_FORMAT_R8G8_SNORM:
                 return VK_FORMAT_R8G8_SNORM;
             case DXGI_FORMAT_R8G8_SINT:

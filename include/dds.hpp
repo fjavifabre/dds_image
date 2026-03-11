@@ -415,9 +415,9 @@ namespace dds {
 	 * When using this function, image->data will always be empty and the mipmap span's will reference
 	 * the passed pointer.
 	 */
-	DDS_NO_DISCARD inline ReadResult readImage(std::uint8_t* ptr, std::size_t fileSize, dds::Image* image) {
+	DDS_NO_DISCARD inline ReadResult readImage(const std::uint8_t* ptr, std::size_t fileSize, dds::Image* image) {
         // Read the magic number
-        auto* ddsMagic = reinterpret_cast<uint32_t*>(ptr);
+        const auto* ddsMagic = reinterpret_cast<const uint32_t*>(ptr);
         ptr += sizeof(uint32_t);
 
         // Read the header

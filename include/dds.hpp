@@ -426,13 +426,15 @@ namespace dds {
         return true;
     }
 
-	/**
-	 * When using this function, image->data will always be empty and the mipmap span's will reference
-	 * the passed pointer.
-	 */
-	DDS_NO_DISCARD inline ReadResult readImage(const std::uint8_t* ptr, std::size_t fileSize, dds::Image* image) {
-        // Read the magic number
-        const auto* ddsMagic = reinterpret_cast<const uint32_t*>(ptr);
+    /**
+     * When using this function, image->data will always be empty and the mipmap span's will reference
+     * the passed pointer.
+     */
+    DDS_NO_DISCARD inline ReadResult readImage(const std::uint8_t* ptr, std::size_t fileSize, dds::Image* image) {
+        // Validate header
+        if (!isDDSImage(ptr))
+            return dds::ReadResult::Failure;
+
         ptr += sizeof(uint32_t);
 
         // Read the header
@@ -440,11 +442,6 @@ namespace dds {
             return dds::ReadResult::Failure;
         const auto* header = reinterpret_cast<const dds::FileHeader*>(ptr);
         ptr += sizeof(dds::FileHeader);
-
-        // Validate header. A DWORD (magic number) containing the four character code value 'DDS '
-        // (0x20534444).
-        if (*ddsMagic != dds::DdsMagicNumber::DDS)
-            return dds::ReadResult::Failure;
 
         const dds::Dx10Header* additionalHeader = nullptr;
         if (hasBit(header->pixelFormat.flags, PixelFormatFlags::FourCC) &&

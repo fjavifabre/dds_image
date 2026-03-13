@@ -411,6 +411,21 @@ namespace dds {
     }
 #endif // #ifdef VK_VERSION_1_0
 
+    /**
+     * Check that that given data start with DDS magic number
+     */
+    DDS_NO_DISCARD inline bool isDDSImage(const std::uint8_t* ptr) {
+        // Read the magic number
+        const auto* ddsMagic = reinterpret_cast<const uint32_t*>(ptr);
+
+        // Validate header. A DWORD (magic number) containing the four character code value 'DDS '
+        // (0x20534444).
+        if (*ddsMagic != dds::DdsMagicNumber::DDS)
+            return false;
+
+        return true;
+    }
+
 	/**
 	 * When using this function, image->data will always be empty and the mipmap span's will reference
 	 * the passed pointer.

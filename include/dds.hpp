@@ -578,7 +578,7 @@ namespace dds {
                 uint32_t size = computeMipmapSize(image->format, width, height);
                 totalSize += static_cast<uint64_t>(size);
 
-                image->mipmaps.emplace_back(ptr, size);
+                image->mipmaps.emplace_back(ptr, static_cast<std::size_t>(size));
                 ptr += size;
 
                 width = max(width / 2, 1u);

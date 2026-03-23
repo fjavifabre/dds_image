@@ -14,11 +14,11 @@
     static_cast<uint32_t>(char1) | (static_cast<uint32_t>(char2) << 8) | (static_cast<uint32_t>(char3) << 16) |                            \
         (static_cast<uint32_t>(char4) << 24)
 
-#define UNDO_FOUR_CHARACTER_CODE(x, name)                                                                                            \
-    unsigned char name[4];                                                                                                           \
-    name[0] = x >> 0;                                                                                                                \
-    name[1] = x >> 8;                                                                                                                \
-    name[2] = x >> 16;                                                                                                               \
+#define UNDO_FOUR_CHARACTER_CODE(x, name)                                                                                                  \
+    unsigned char name[4];                                                                                                                 \
+    name[0] = x >> 0;                                                                                                                      \
+    name[1] = x >> 8;                                                                                                                      \
+    name[2] = x >> 16;                                                                                                                     \
     name[3] = x >> 24;
 
 #if __cplusplus >= 201703L || (defined(_MSVC_LANG) && _MSVC_LANG >= 201703L)
@@ -321,6 +321,6 @@ namespace dds {
         bool supportsAlpha = false;
         DXGI_FORMAT format;
         std::unique_ptr<uint8_t[]> data = nullptr;
-        std::vector<dds::span<uint8_t>> mipmaps;
+        std::vector<dds::span<const uint8_t>> mipmaps;
     };
 } // namespace dds
